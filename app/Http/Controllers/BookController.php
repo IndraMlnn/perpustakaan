@@ -10,9 +10,14 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      */
+     public function __construct(){
+        $this->middleware(['auth','role:admin'])->except(['index','show']);
+    }
+
     public function index()
     {
-        //
+        $books = Book::all();
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -20,7 +25,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create');        
     }
 
     /**
@@ -28,7 +33,15 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $data = $request->validate([
+            'title'=>'required|string|max:255',
+            'author'=>'nullable|string|max:255',
+            'isbn'=>'nullable|string|max:30|unique:books,isbn',
+            'stock'=>'required|integer|min:1',
+            'description'=>'nullable|string',
+        ]);
+        Book::create($data);
+        return redirect()->route('books.index')->with('ok','Buku dibuat');
     }
 
     /**
@@ -36,7 +49,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        $book = Book::findOrFail($book->id);
+        return view('books.show', compact('book'));
     }
 
     /**
@@ -44,7 +58,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('books.edit', compact('book'));
     }
 
     /**
@@ -52,7 +66,15 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+         $data = $request->validate([
+            'title'=>'required',
+            'author'=>'nullable',
+            'isbn'=>"nullable|string|max:30|unique:books,isbn,{$book->id}",
+            'stock'=>'required|integer|min:1',
+            'description'=>'nullable',
+        ]);
+        $book->update($data);
+        return redirect()->route('books.index')->with('ok','Buku diupdate');
     }
 
     /**
@@ -60,6 +82,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return back()->with('ok','Buku dihapus');
     }
 }

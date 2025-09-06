@@ -9,8 +9,9 @@ class Book extends Model
     protected $fillable = [
         'title',
         'author',
-        'genre',
-        'price',
+        'isbn',
+        'stock',
+        'description',
     ];
 
     public function bookings()

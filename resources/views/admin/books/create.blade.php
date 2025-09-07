@@ -4,7 +4,7 @@
 <div class="p-6 max-w-lg mx-auto">
     <h1 class="text-2xl font-bold mb-4">Tambah Buku</h1>
 
-    <form action="{{ route('admin.books.store') }}" method="POST" class="space-y-4">
+    <form action="{{ route('admin.books.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
 
         <div>
@@ -30,6 +30,11 @@
         <div>
             <label class="block text-sm font-medium mb-1">Deskripsi</label>
             <textarea name="description" class="w-full p-2 border rounded"></textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Cover</label>
+            <input type="file" name="cover" accept="image/*" class="w-full p-2 border rounded">
         </div>
 
         <div class="flex justify-end">

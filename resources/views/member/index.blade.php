@@ -38,6 +38,17 @@
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
       @foreach($books as $book)
         <div class="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition">
+          {{-- Cover Buku --}}
+          @if($book->cover)
+            <img src="{{ asset('storage/' . $book->cover) }}" 
+                 alt="{{ $book->title }}" 
+                 class="w-full h-48 object-cover">
+          @else
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+              <span class="text-gray-500">No Cover</span>
+            </div>
+          @endif
+
           <div class="p-4">
             <h4 class="font-semibold text-lg">{{ $book->title }}</h4>
             <p class="text-sm text-gray-500">{{ $book->author }}</p>

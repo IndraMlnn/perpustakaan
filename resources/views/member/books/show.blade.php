@@ -4,9 +4,15 @@
 <div class="bg-white shadow rounded-xl overflow-hidden p-6 md:flex gap-8">
     <!-- Book Cover -->
     <div class="md:w-1/3 flex justify-center items-start">
-        <img src="https://via.placeholder.com/300x400.png?text=Book+Cover" 
-             alt="{{ $book->title }}" 
-             class="rounded-lg shadow-lg w-full max-w-xs object-cover">
+        @if($book->cover)
+            <img src="{{ asset('storage/' . $book->cover) }}" 
+                 alt="{{ $book->title }}" 
+                 class="rounded-lg shadow-lg w-full max-w-xs object-cover">
+        @else
+            <img src="https://via.placeholder.com/300x400.png?text=No+Cover" 
+                 alt="{{ $book->title }}" 
+                 class="rounded-lg shadow-lg w-full max-w-xs object-cover">
+        @endif
     </div>
 
     <!-- Book Details -->

@@ -1,12 +1,18 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('content')
 <div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">Daftar Booking</h1>
+    <h1 class="text-2xl font-bold mb-4">Booking Saya</h1>
 
     @if(session('success'))
         <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
             {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            {{ session('error') }}
         </div>
     @endif
 
@@ -15,10 +21,8 @@
             <tr class="bg-gray-100 text-left">
                 <th class="p-3 border">#</th>
                 <th class="p-3 border">Judul Buku</th>
-                <th class="p-3 border">Member</th>
                 <th class="p-3 border">Status</th>
                 <th class="p-3 border">Tanggal Booking</th>
-                <th class="p-3 border">Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +30,6 @@
                 <tr class="hover:bg-gray-50">
                     <td class="p-3 border">{{ $loop->iteration }}</td>
                     <td class="p-3 border">{{ $booking->book->title }}</td>
-                    <td class="p-3 border">{{ $booking->user->name }}</td>
                     <td class="p-3 border">
                         <span class="px-2 py-1 rounded text-sm 
                             @if($booking->status == 'pending') bg-yellow-200 text-yellow-800
@@ -37,14 +40,10 @@
                         </span>
                     </td>
                     <td class="p-3 border">{{ $booking->created_at->format('d M Y') }}</td>
-                    <td class="p-3 border">
-                        <a href="{{ route('admin.bookings.show', $booking) }}" 
-                           class="px-3 py-1 bg-blue-600 text-white rounded">Detail</a>
-                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center p-4">Belum ada data booking.</td>
+                    <td colspan="4" class="text-center p-4">Belum ada booking.</td>
                 </tr>
             @endforelse
         </tbody>

@@ -6,19 +6,19 @@
         <!-- Card Books -->
         <div class="bg-white shadow rounded-xl p-6">
             <h2 class="text-lg font-semibold mb-2">Total Books</h2>
-            <p class="text-3xl font-bold text-blue-600">{{ $booksCount ?? 0 }}</p>
+            <p class="text-3xl font-bold text-blue-600">{{ $totalBooks ?? 0 }}</p>
         </div>
 
         <!-- Card Users -->
         <div class="bg-white shadow rounded-xl p-6">
             <h2 class="text-lg font-semibold mb-2">Total Users</h2>
-            <p class="text-3xl font-bold text-green-600">{{ $usersCount ?? 0 }}</p>
+            <p class="text-3xl font-bold text-green-600">{{ $totalUsers ?? 0 }}</p>
         </div>
 
         <!-- Card Bookings -->
         <div class="bg-white shadow rounded-xl p-6">
             <h2 class="text-lg font-semibold mb-2">Total Bookings</h2>
-            <p class="text-3xl font-bold text-purple-600">{{ $bookingsCount ?? 0 }}</p>
+            <p class="text-3xl font-bold text-purple-600">{{ $totalBookings ?? 0 }}</p>
         </div>
     </div>
 

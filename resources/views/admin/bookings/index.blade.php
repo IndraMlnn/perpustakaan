@@ -2,56 +2,64 @@
 
 @section('content')
 <div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">Daftar Booking</h1>
+    <h1 class="text-2xl font-bold mb-6">📖 Manage Bookings</h1>
 
     @if(session('success'))
-        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+        <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
             {{ session('success') }}
         </div>
     @endif
 
-    <table class="min-w-full border border-gray-200 rounded-lg shadow">
-        <thead>
-            <tr class="bg-gray-100 text-left">
-                <th class="p-3 border">#</th>
-                <th class="p-3 border">Judul Buku</th>
-                <th class="p-3 border">Member</th>
-                <th class="p-3 border">Status</th>
-                <th class="p-3 border">Tanggal Booking</th>
-                <th class="p-3 border">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($bookings as $booking)
-                <tr class="hover:bg-gray-50">
-                    <td class="p-3 border">{{ $loop->iteration }}</td>
-                    <td class="p-3 border">{{ $booking->book->title }}</td>
-                    <td class="p-3 border">{{ $booking->user->name }}</td>
-                    <td class="p-3 border">
-                        <span class="px-2 py-1 rounded text-sm 
-                            @if($booking->status == 'pending') bg-yellow-200 text-yellow-800
-                            @elseif($booking->status == 'approved') bg-blue-200 text-blue-800
-                            @elseif($booking->status == 'returned') bg-green-200 text-green-800
-                            @else bg-red-200 text-red-800 @endif">
-                            {{ ucfirst($booking->status) }}
-                        </span>
-                    </td>
-                    <td class="p-3 border">{{ $booking->created_at->format('d M Y') }}</td>
-                    <td class="p-3 border">
-                        <a href="{{ route('admin.bookings.show', $booking) }}" 
-                           class="px-3 py-1 bg-blue-600 text-white rounded">Detail</a>
-                    </td>
-                </tr>
-            @empty
+    <div class="overflow-x-auto bg-white shadow rounded-lg">
+        <table class="w-full border-collapse">
+            <thead class="bg-gray-100">
                 <tr>
-                    <td colspan="6" class="text-center p-4">Belum ada data booking.</td>
+                    <th class="px-4 py-2 border">User</th>
+                    <th class="px-4 py-2 border">Book</th>
+                    <th class="px-4 py-2 border">Borrowed At</th>
+                    <th class="px-4 py-2 border">Due At</th>
+                    <th class="px-4 py-2 border">Returned At</th>
+                    <th class="px-4 py-2 border">Status</th>
+                    <th class="px-4 py-2 border">Actions</th>
                 </tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach($bookings as $booking)
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-4 py-2 border">{{ $booking->user->name }}</td>
+                        <td class="px-4 py-2 border">{{ $booking->book->title }}</td>
+                        <td class="px-4 py-2 border">{{ $booking->borrowed_at ?? '-' }}</td>
+                        <td class="px-4 py-2 border">{{ $booking->due_at ?? '-' }}</td>
+                        <td class="px-4 py-2 border">{{ $booking->returned_at ?? '-' }}</td>
+                        <td class="px-4 py-2 border capitalize">{{ $booking->status }}</td>
+                        <td class="px-4 py-2 border space-x-2">
+                            @if($booking->status === 'pending')
+                                <!-- Approve Form -->
+                                <form action="{{ route('admin.bookings.approve', $booking) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    <input type="date" name="due_at" class="border rounded px-2 py-1 text-sm" required>
+                                    <button class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Approve</button>
+                                </form>
 
-    <div class="mt-4">
-        {{ $bookings->links() }}
+                                <!-- Reject Form -->
+                                <form action="{{ route('admin.bookings.reject', $booking) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    <button class="bg-red-500 text-white px-3 py-1 rounded text-sm">Reject</button>
+                                </form>
+                            @elseif($booking->status === 'approved')
+                                <!-- Return Form -->
+                                <form action="{{ route('admin.bookings.return', $booking) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    <button class="bg-green-500 text-white px-3 py-1 rounded text-sm">Mark Returned</button>
+                                </form>
+                            @else
+                                <span class="text-gray-500">No actions</span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
 @endsection

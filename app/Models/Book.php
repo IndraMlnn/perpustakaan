@@ -18,5 +18,8 @@ class Book extends Model
         'cover', 
     ];
 
-    // has
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }

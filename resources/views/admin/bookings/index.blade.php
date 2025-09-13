@@ -28,8 +28,8 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-2 border">{{ $booking->user->name }}</td>
                         <td class="px-4 py-2 border">{{ $booking->book->title }}</td>
-                        <td class="px-4 py-2 border">{{ $booking->borrowed_at ?? '-' }}</td>
-                        <td class="px-4 py-2 border">{{ $booking->due_at ?? '-' }}</td>
+                        <td class="px-4 py-2 border">{{ $booking->borrowed_at->format('d M Y') ?? '-' }}</td>
+                        <td class="px-4 py-2 border">{{ $booking->due_at->format('d M Y') ?? '-' }}</td>
                         <td class="px-4 py-2 border">{{ $booking->returned_at ?? '-' }}</td>
                         <td class="px-4 py-2 border capitalize">{{ $booking->status }}</td>
                         <td class="px-4 py-2 border space-x-2">
@@ -37,7 +37,7 @@
                                 <!-- Approve Form -->
                                 <form action="{{ route('admin.bookings.approve', $booking) }}" method="POST" class="inline-block">
                                     @csrf
-                                    <input type="date" name="due_at" class="border rounded px-2 py-1 text-sm" required>
+                    
                                     <button class="bg-blue-500 text-white px-3 py-1 rounded text-sm">Approve</button>
                                 </form>
 
@@ -46,15 +46,16 @@
                                     @csrf
                                     <button class="bg-red-500 text-white px-3 py-1 rounded text-sm">Reject</button>
                                 </form>
-                            @elseif($booking->status === 'approved')
+                            @elseif($booking->status === 'approved' &&  $booking->due_at && $booking->due_at->isToday())
                                 <!-- Return Form -->
                                 <form action="{{ route('admin.bookings.return', $booking) }}" method="POST" class="inline-block">
                                     @csrf
                                     <button class="bg-green-500 text-white px-3 py-1 rounded text-sm">Mark Returned</button>
                                 </form>
                             @else
-                                <span class="text-gray-500">No actions</span>
+                                <!-- <span class="text-gray-500">No actions</span> -->
                             @endif
+                            <a href="{{ route('admin.bookings.show', $booking) }}"> <button class="bg-yellow-500 text-white px-3 py-1 rounded text-sm">Detail</button></a>
                         </td>
                     </tr>
                 @endforeach

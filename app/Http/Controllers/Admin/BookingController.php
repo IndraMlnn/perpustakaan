@@ -31,12 +31,15 @@ class BookingController extends Controller
      */
     public function approve(Booking $booking)
     {
+        if ($booking->book->stock <= 0) {
+        return redirect()->route('admin.bookings.index')
+            ->with('error', 'Stok buku habis, tidak bisa approve.');
+        }
         $booking->update([
             'status' => 'approved',
-            'borrowed_at' => now(),
-            'due_at' => now()->addDays(7), // default 7 hari
         ]);
 
+        $booking->book->decrement('stock', 1);
         return redirect()->route('admin.bookings.index')->with('success', 'Booking disetujui.');
     }
 
@@ -61,6 +64,8 @@ class BookingController extends Controller
             'status' => 'returned',
             'returned_at' => now(),
         ]);
+
+        $booking->book->increment('stock', 1);
 
         return redirect()->route('admin.bookings.index')->with('success', 'Buku telah dikembalikan.');
     }

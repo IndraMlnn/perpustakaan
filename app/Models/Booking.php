@@ -15,6 +15,11 @@ class Booking extends Model
         'status',
     ];
 
+    protected $casts = [
+        'borrowed_at' => 'date',
+        'due_at' => 'date',
+    ];
+
     // Relasi ke buku
     public function book()
     {

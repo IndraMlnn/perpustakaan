@@ -42,10 +42,10 @@
 
                 <!-- Navigation Menu -->
                 <nav class="hidden md:flex items-center space-x-1">
-                    <a href="{{ route('member.dashboard') }}" 
+                    <a href="{{ route('member.books.index') }}" 
                        class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 text-primary bg-primary/10 border border-primary/20">
                         <i class="fas fa-home text-sm"></i>
-                        <span>Dashboard</span>
+                        <span>Home</span>
                     </a>
                     <a href="{{ route('member.books.index') }}" 
                        class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 text-gray-600 hover:text-primary hover:bg-gray-50">
@@ -108,7 +108,7 @@
         <!-- Mobile Navigation -->
         <div class="md:hidden border-t border-gray-200 bg-white">
             <nav class="px-4 py-3 space-y-1">
-                <a href="{{ route('member.dashboard') }}" 
+                <a href="{{ route('member.books.index') }}" 
                    class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-primary bg-primary/10">
                     <i class="fas fa-home"></i>
                     <span>Dashboard</span>

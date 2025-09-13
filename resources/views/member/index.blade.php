@@ -32,6 +32,29 @@
     </div>
   </section>
 
+  <!-- Search -->
+  <section class="mt-12 max-w-4xl px-4 mx-auto">
+    <h3 class="text-2xl font-bold mb-6 text-center">Search Books</h3>
+    <form action="{{ route('member.books.index') }}" method="GET" class="flex items-center space-x-4 justify-center">
+      <input type="text" name="search" placeholder="Search by title or author" 
+            class="w-full md:w-1/2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
+            value="{{ request('search') }}">
+      
+      <button type="submit" 
+              class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700">
+        Search
+      </button>
+
+      @if(request('search'))
+        <a href="{{ route('member.books.index') }}" 
+          class="bg-gray-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-600">
+          Reset
+        </a>
+      @endif
+    </form>
+  </section>
+
+
   <!-- Recommended Books -->
   <section class="mt-12">
     <h3 class="text-2xl font-bold mb-6">Recommended for You</h3>

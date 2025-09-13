@@ -62,7 +62,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 */
 Route::middleware(['auth', 'role:member'])->prefix('member')->name('member.')->group(function () {
     // Dashboard Member
-    Route::get('/dashboard', [MemberDashboardController::class, 'index'])->name('dashboard');
 
     // Books
     Route::get('/books', [BookController::class, 'index'])->name('books.index');

@@ -58,4 +58,24 @@ class BookingController extends Controller
 
         return view('member.bookings.index', compact('bookings'));
     }
+    public function cancel(Booking $booking)
+    {
+        // pastikan user hanya bisa cancel booking miliknya sendiri
+        if ($booking->user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Tidak bisa membatalkan booking orang lain.');
+        }
+
+        // hanya bisa cancel kalau masih pending
+        if ($booking->status !== 'pending') {
+            return redirect()->back()->with('error', 'Booking tidak bisa dibatalkan.');
+        }
+
+        $booking->update([
+            'status' => 'canceled',
+        ]);
+
+        return redirect()->route('member.bookings.my')
+            ->with('success', 'Booking berhasil dibatalkan.');
+    }
+
 }

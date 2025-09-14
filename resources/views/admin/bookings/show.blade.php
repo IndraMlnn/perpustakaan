@@ -8,12 +8,15 @@
         <p><strong>Judul Buku:</strong> {{ $booking->book->title }}</p>
         <p><strong>Member:</strong> {{ $booking->user->name }}</p>
         <p><strong>Status:</strong> {{ ucfirst($booking->status) }}</p>
-        <p><strong>Dibuat pada:</strong> {{ $booking->created_at->format('d M Y H:i') }}</p>
+        <p><strong>Dibuat pada:</strong> {{ $booking->created_at->format('d M Y ') }}</p>
       <p><strong>Batas Pinjam:</strong> 
-            {{ $booking->due_at ? \Carbon\Carbon::parse($booking->due_at)->format('d M Y') : '-' }}
+            {{ $booking->due_at ? \Carbon\Carbon::parse($booking->due_at)->format('d M Y ') : '-' }}
+        </p>
+      <p><strong>Dikembalikan:</strong> 
+            {{ $booking->due_at ? \Carbon\Carbon::parse($booking->returned_at)->format('d M Y') : '-' }}
         </p>
 
-        <p><strong>Dikembalikan:</strong> {{ $booking->returned_at ? $booking->returned_at->format('d M Y H:i') : '-' }}</p>
+      
     </div>
 
     <div class="mt-4 flex gap-2">

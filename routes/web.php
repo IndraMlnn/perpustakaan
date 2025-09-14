@@ -67,6 +67,7 @@ Route::middleware(['auth', 'role:member'])->prefix('member')->name('member.')->g
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
     Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');
     Route::post('/books/{book}/booking', [BookingController::class, 'store'])->name('bookings.store');
+    Route::patch('/my-bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 
     // My Bookings
     Route::get('/my-bookings', [BookingController::class, 'myBookings'])->name('bookings.my'); // ✅ pakai global BookingController

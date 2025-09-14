@@ -23,6 +23,7 @@
                 <th class="p-3 border">Judul Buku</th>
                 <th class="p-3 border">Status</th>
                 <th class="p-3 border">Tanggal Booking</th>
+                <th class="p-3 border">Aksi</th>                
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,18 @@
                         </span>
                     </td>
                     <td class="p-3 border">{{ $booking->created_at->format('d M Y') }}</td>
+                    <td class="p-3 border">
+                         @if($booking->status === 'pending')
+                        <form action="{{ route('member.bookings.cancel', $booking->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Yakin ingin membatalkan booking ini?')">
+                                Cancel
+                            </button>
+                        </form>
+                    @endif
+                    </td>
                 </tr>
             @empty
                 <tr>

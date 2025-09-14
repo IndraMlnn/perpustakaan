@@ -22,6 +22,7 @@
                     <th class="px-4 py-2 border">Status</th>
                     <th class="px-4 py-2 border">Actions</th>
                 </tr>
+                {{-- TEST --}}
             </thead>
             <tbody>
                 @foreach($bookings as $booking)
@@ -46,7 +47,7 @@
                                     @csrf
                                     <button class="bg-red-500 text-white px-3 py-1 rounded text-sm">Reject</button>
                                 </form>
-                            @elseif($booking->status === 'approved' &&  $booking->due_at && $booking->due_at->isToday())
+                            @elseif($booking->status === 'approved' && ($booking->due_at->lte(\Carbon\Carbon::today())))
                                 <!-- Return Form -->
                                 <form action="{{ route('admin.bookings.return', $booking) }}" method="POST" class="inline-block">
                                     @csrf

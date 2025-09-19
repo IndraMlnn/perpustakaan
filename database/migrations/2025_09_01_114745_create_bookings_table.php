@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('book_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // anggota
-            $table->date('borrowed_at')->nullable();   // diisi saat disetujui
-            $table->date('due_at')->nullable();        // jatuh tempo
-            $table->date('returned_at')->nullable();   // diisi saat dikembalikan
-            $table->enum('status', ['pending','approved','returned','rejected'])
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); 
+            $table->date('borrowed_at')->nullable();   
+            $table->date('due_at')->nullable();       
+            $table->date('returned_at')->nullable();   
+            $table->enum('status', ['pending','approved','returned','rejected','canceled'])
                   ->default('pending');
             $table->timestamps();
         });

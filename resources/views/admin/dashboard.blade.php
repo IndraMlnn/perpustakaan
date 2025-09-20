@@ -22,43 +22,44 @@
         </div>
     </div>
 
-    <div class="mt-8">
-        <h2 class="text-xl font-bold mb-4">Latest Bookings</h2>
-        <div class="bg-white shadow rounded-xl overflow-hidden">
-            <table class="w-full border-collapse">
-                <thead class="bg-gray-100">
-                    <tr>
-                        <th class="p-3 text-left">ID</th>
-                        <th class="p-3 text-left">User</th>
-                        <th class="p-3 text-left">Book</th>
-                        <th class="p-3 text-left">Status</th>
-                        <th class="p-3 text-left">Date</th>
+   <div class="mt-8">
+    <h2 class="text-xl font-bold mb-4">Latest Bookings</h2>
+    <div class="bg-white shadow rounded-xl overflow-hidden">
+        <table class="w-full border-collapse">
+            <thead class="bg-gray-100 text-gray-700 text-sm font-semibold">
+                <tr>
+                    <th class="p-3 text-left">ID</th>
+                    <th class="p-3 text-left">User</th>
+                    <th class="p-3 text-left">Book</th>
+                    <th class="p-3 text-left">Status</th>
+                    <th class="p-3 text-left">Date</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-sm">
+                @forelse($latestBookings as $booking)
+                    <tr class="odd:bg-white even:bg-gray-50 hover:bg-gray-100">
+                        <td class="p-3">{{ $booking->id }}</td>
+                        <td class="p-3">{{ $booking->user->name }}</td>
+                        <td class="p-3">{{ $booking->book->title }}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-1 rounded text-xs font-medium
+                                @if($booking->status == 'pending') bg-yellow-100 text-yellow-600
+                                @elseif($booking->status == 'confirmed') bg-green-100 text-green-600
+                                @else bg-red-100 text-red-600 @endif">
+                                {{ ucfirst($booking->status) }}
+                            </span>
+                        </td>
+                        <td class="p-3">{{ $booking->created_at->format('d M Y') }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @forelse($latestBookings as $booking)
-                        <tr class="border-t">
-                            <td class="p-3">{{ $booking->id }}</td>
-                            <td class="p-3">{{ $booking->user->name }}</td>
-                            <td class="p-3">{{ $booking->book->title }}</td>
-                            <td class="p-3">
-                                <span class="px-2 py-1 rounded text-xs
-                                    @if($booking->status == 'pending') bg-yellow-100 text-yellow-600
-                                    @elseif($booking->status == 'confirmed') bg-green-100 text-green-600
-                                    @else bg-red-100 text-red-600 @endif">
-                                    {{ ucfirst($booking->status) }}
-                                </span>
-                            </td>
-                            <td class="p-3">{{ $booking->created_at->format('d M Y') }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="p-3 text-center text-gray-500">No bookings yet</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                @empty
+                    <tr>
+                        <td colspan="5" class="p-3 text-center text-gray-500">No bookings yet</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
+</div>
+
 </div>
 @endsection

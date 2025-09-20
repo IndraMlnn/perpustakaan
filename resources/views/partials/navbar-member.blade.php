@@ -13,23 +13,29 @@
             </div>
 
             <!-- Navigation Menu -->
-            <nav class="hidden md:flex items-center space-x-1">
+           <nav class="hidden md:flex items-center space-x-1">
                 <a href="{{ route('member.books.index') }}" 
-                   class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 text-blue-600 bg-blue-600/10 border border-blue-600/20">
+                @class([
+                    'flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200',
+                    'text-blue-600 bg-blue-600/10 border border-blue-600/20' => request()->routeIs('member.books.index'),
+                    'text-gray-600 hover:text-blue-600 hover:bg-gray-50' => !request()->routeIs('member.books.index'),
+                ])>
                     <i class="fas fa-home text-sm"></i>
                     <span>Home</span>
                 </a>
-                <a href="{{ route('member.books.index') }}" 
-                   class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 text-gray-600 hover:text-blue-600 hover:bg-gray-50">
-                    <i class="fas fa-books text-sm"></i>
-                    <span>Books</span>
-                </a>
+
+
                 <a href="{{ route('member.bookings.my') }}" 
-                   class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 text-gray-600 hover:text-blue-600 hover:bg-gray-50">
+                @class([
+                    'flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200',
+                    'text-blue-600 bg-blue-600/10 border border-blue-600/20' => request()->routeIs('member.bookings.*'),
+                    'text-gray-600 hover:text-blue-600 hover:bg-gray-50' => !request()->routeIs('member.bookings.*'),
+                ])>
                     <i class="fas fa-bookmark text-sm"></i>
                     <span>My Bookings</span>
                 </a>
             </nav>
+
 
             <!-- User Actions -->
             <div class="flex items-center space-x-3">
@@ -70,15 +76,17 @@
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button class="md:hidden p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg">
+                <button onclick="toggleMobileMenu()" 
+                        class="md:hidden p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg">
                     <i class="fas fa-bars text-lg"></i>
                 </button>
+
             </div>
         </div>
     </div>
 
     <!-- Mobile Navigation -->
-    <div class="md:hidden border-t border-gray-200 bg-white">
+    <div id="mobileMenu" class="md:hidden border-t border-gray-200 bg-white ">
         <nav class="px-4 py-3 space-y-1">
             <a href="{{ route('member.books.index') }}" 
                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-blue-600 bg-blue-600/10">

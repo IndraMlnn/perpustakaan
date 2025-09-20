@@ -60,18 +60,6 @@
                 </a>
 
                 <!-- Reports -->
-                <a href="#"
-                   class="nav-item flex items-center px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-gray-900 rounded-lg">
-                    <i class="fas fa-chart-bar w-5 text-center mr-3"></i>
-                    <span>Reports</span>
-                </a>
-
-                <!-- Settings -->
-                <a href="#"
-                   class="nav-item flex items-center px-3 py-2.5 text-sm font-medium text-gray-700 hover:text-gray-900 rounded-lg">
-                    <i class="fas fa-cog w-5 text-center mr-3"></i>
-                    <span>Settings</span>
-                </a>
             </div>
         </nav>
 

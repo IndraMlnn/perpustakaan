@@ -55,25 +55,32 @@
     @include('partials.footer-member')
 
 
-    <script>
-        // Simple dropdown toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const userButton = document.querySelector('.relative button');
-            const dropdown = document.querySelector('.absolute.right-0');
-            
-            if (userButton && dropdown) {
-                userButton.addEventListener('click', function() {
-                    dropdown.classList.toggle('hidden');
-                });
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Dropdown user menu
+    const userButton = document.querySelector('.relative button');
+    const dropdown = document.querySelector('.absolute.right-0');
 
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(event) {
-                    if (!userButton.contains(event.target) && !dropdown.contains(event.target)) {
-                        dropdown.classList.add('hidden');
-                    }
-                });
+    if (userButton && dropdown) {
+        userButton.addEventListener('click', function(e) {
+            e.stopPropagation(); // biar gak langsung ketutup
+            dropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!userButton.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
             }
         });
-    </script>
+    }
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('hidden');
+    }
+
+});
+</script>
+
 </body>
 </html>
